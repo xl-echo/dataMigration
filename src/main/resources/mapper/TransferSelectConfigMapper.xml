@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.one.dao.TransferSelectConfigMapper">
+  <resultMap id="BaseResultMap" type="com.echo.one.po.TransferSelectConfig">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="source_config" jdbcType="VARCHAR" property="sourceConfig" />
+    <result column="table_name" jdbcType="VARCHAR" property="tableName" />
+    <result column="table_cloumn_name" jdbcType="VARCHAR" property="tableCloumnName" />
+    <result column="table_where" jdbcType="VARCHAR" property="tableWhere" />
+    <result column="limit_size" jdbcType="BIGINT" property="limitSize" />
+    <result column="status" jdbcType="BIGINT" property="status" />
+    <result column="create_uname" jdbcType="VARCHAR" property="createUname" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_uname" jdbcType="VARCHAR" property="updateUname" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+
+    id, task_id, source_config, `table_name`, table_cloumn_name, table_where, limit_size, 
+    `status`, create_uname, create_time, update_uname, update_time
+  </sql>
+  <select id="getTransferSelectConfig" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from transfer_select_config limit 100
+  </select>
+
+  <select id="getBatchTransferSelectConfig" parameterType="java.util.List" resultMap="BaseResultMap">
+    select * from transfer_select_config where task_id in
+    <foreach collection="taskIds" open="(" separator="," close=")" index="index" item="item">
+         #{item}
+     </foreach>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from transfer_select_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    delete from transfer_select_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.echo.one.po.TransferSelectConfig" useGeneratedKeys="true">
+
+    insert into transfer_select_config (task_id, source_config, `table_name`, 
+      table_cloumn_name, table_where, limit_size, 
+      `status`, create_uname, create_time, 
+      update_uname, update_time)
+    values (#{taskId,jdbcType=VARCHAR}, #{sourceConfig,jdbcType=VARCHAR}, #{tableName,jdbcType=VARCHAR}, 
+      #{tableCloumnName,jdbcType=VARCHAR}, #{tableWhere,jdbcType=VARCHAR}, #{limitSize,jdbcType=BIGINT}, 
+      #{status,jdbcType=BIGINT}, #{createUname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUname,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.echo.one.po.TransferSelectConfig" useGeneratedKeys="true">
+
+    insert into transfer_select_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="sourceConfig != null">
+        source_config,
+      </if>
+      <if test="tableName != null">
+        `table_name`,
+      </if>
+      <if test="tableCloumnName != null">
+        table_cloumn_name,
+      </if>
+      <if test="tableWhere != null">
+        table_where,
+      </if>
+      <if test="limitSize != null">
+        limit_size,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createUname != null">
+        create_uname,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUname != null">
+        update_uname,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceConfig != null">
+        #{sourceConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null">
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableCloumnName != null">
+        #{tableCloumnName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableWhere != null">
+        #{tableWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="limitSize != null">
+        #{limitSize,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="createUname != null">
+        #{createUname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUname != null">
+        #{updateUname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.echo.one.po.TransferSelectConfig">
+
+    update transfer_select_config
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceConfig != null">
+        source_config = #{sourceConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null">
+        `table_name` = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableCloumnName != null">
+        table_cloumn_name = #{tableCloumnName,jdbcType=VARCHAR},
+      </if>
+      <if test="tableWhere != null">
+        table_where = #{tableWhere,jdbcType=VARCHAR},
+      </if>
+      <if test="limitSize != null">
+        limit_size = #{limitSize,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="createUname != null">
+        create_uname = #{createUname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUname != null">
+        update_uname = #{updateUname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.echo.one.po.TransferSelectConfig">
+
+    update transfer_select_config
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      source_config = #{sourceConfig,jdbcType=VARCHAR},
+      `table_name` = #{tableName,jdbcType=VARCHAR},
+      table_cloumn_name = #{tableCloumnName,jdbcType=VARCHAR},
+      table_where = #{tableWhere,jdbcType=VARCHAR},
+      limit_size = #{limitSize,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=BIGINT},
+      create_uname = #{createUname,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_uname = #{updateUname,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.one.dao.TransferDataTaskMapper">
+  <resultMap id="BaseResultMap" type="com.echo.one.po.TransferDataTask">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="transfer_mode" jdbcType="CHAR" property="transferMode" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_uname" jdbcType="VARCHAR" property="createUname" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_uname" jdbcType="VARCHAR" property="updateUname" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, task_id, source_config, target_config, transfer_mode, `status`, create_uname,
+    create_time, update_uname, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from transfer_data_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from transfer_data_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.echo.one.po.TransferDataTask" useGeneratedKeys="true">
+    insert into transfer_data_task (task_id, source_config, target_config,
+      transfer_mode, `status`, create_uname, 
+      create_time, update_uname, update_time
+      )
+    values (#{taskId,jdbcType=VARCHAR}, #{sourceConfig,jdbcType=VARCHAR}, #{targetConfig,jdbcType=VARCHAR}, 
+      #{transferMode,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{createUname,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUname,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.echo.one.po.TransferDataTask" useGeneratedKeys="true">
+    
+    insert into transfer_data_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="sourceConfig != null">
+        source_config,
+      </if>
+      <if test="targetConfig != null">
+        target_config,
+      </if>
+      <if test="transferMode != null">
+        transfer_mode,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createUname != null">
+        create_uname,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUname != null">
+        update_uname,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceConfig != null">
+        #{sourceConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="targetConfig != null">
+        #{targetConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="transferMode != null">
+        #{transferMode,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUname != null">
+        #{createUname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUname != null">
+        #{updateUname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.echo.one.po.TransferDataTask">
+    
+    update transfer_data_task
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceConfig != null">
+        source_config = #{sourceConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="targetConfig != null">
+        target_config = #{targetConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="transferMode != null">
+        transfer_mode = #{transferMode,jdbcType=CHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createUname != null">
+        create_uname = #{createUname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUname != null">
+        update_uname = #{updateUname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.echo.one.po.TransferDataTask">
+    
+    update transfer_data_task
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      source_config = #{sourceConfig,jdbcType=VARCHAR},
+      target_config = #{targetConfig,jdbcType=VARCHAR},
+      transfer_mode = #{transferMode,jdbcType=CHAR},
+      `status` = #{status,jdbcType=CHAR},
+      create_uname = #{createUname,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_uname = #{updateUname,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="getTaskTransfer" resultMap="BaseResultMap">
+        select * from transfer_data_task where status = '1'
+    </select>
+
+    <select id="healthyCheck" resultMap="BaseResultMap">
+        select * from transfer_data_task
+    </select>
+</mapper>

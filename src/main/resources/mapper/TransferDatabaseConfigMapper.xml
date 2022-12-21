@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.one.dao.TransferDatabaseConfigMapper">
+  <resultMap id="BaseResultMap" type="com.echo.one.po.TransferDatabaseConfig">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+    <result column="database_direction" jdbcType="VARCHAR" property="databaseDirection" />
+    <result column="database_url" jdbcType="VARCHAR" property="databaseUrl" />
+    <result column="database_username" jdbcType="VARCHAR" property="databaseUsername" />
+    <result column="database_password" jdbcType="VARCHAR" property="databasePassword" />
+    <result column="status" jdbcType="BIGINT" property="status" />
+    <result column="create_uname" jdbcType="VARCHAR" property="createUname" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_uname" jdbcType="VARCHAR" property="updateUname" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, task_id, database_direction, database_url, database_username, database_password,
+    `status`, create_uname, create_time, update_uname, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+        <include refid="Base_Column_List" />
+    from data_task_transfer limit 100
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    
+    delete from transfer_database_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.echo.one.po.TransferDatabaseConfig" useGeneratedKeys="true">
+    
+    insert into transfer_database_config (task_id, database_direction, database_url, 
+      database_username, database_password, `status`, 
+      create_uname, create_time, update_uname, 
+      update_time)
+    values (#{taskId,jdbcType=VARCHAR}, #{databaseDirection,jdbcType=VARCHAR}, #{databaseUrl,jdbcType=VARCHAR}, 
+      #{databaseUsername,jdbcType=VARCHAR}, #{databasePassword,jdbcType=VARCHAR}, #{status,jdbcType=BIGINT}, 
+      #{createUname,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUname,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.echo.one.po.TransferDatabaseConfig" useGeneratedKeys="true">
+    
+    insert into transfer_database_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        task_id,
+      </if>
+      <if test="databaseDirection != null">
+        database_direction,
+      </if>
+      <if test="databaseUrl != null">
+        database_url,
+      </if>
+      <if test="databaseUsername != null">
+        database_username,
+      </if>
+      <if test="databasePassword != null">
+        database_password,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createUname != null">
+        create_uname,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUname != null">
+        update_uname,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskId != null">
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseDirection != null">
+        #{databaseDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseUrl != null">
+        #{databaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseUsername != null">
+        #{databaseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="databasePassword != null">
+        #{databasePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="createUname != null">
+        #{createUname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUname != null">
+        #{updateUname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.echo.one.po.TransferDatabaseConfig">
+    
+    update transfer_database_config
+    <set>
+      <if test="taskId != null">
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseDirection != null">
+        database_direction = #{databaseDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseUrl != null">
+        database_url = #{databaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="databaseUsername != null">
+        database_username = #{databaseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="databasePassword != null">
+        database_password = #{databasePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="createUname != null">
+        create_uname = #{createUname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUname != null">
+        update_uname = #{updateUname,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.echo.one.po.TransferDatabaseConfig">
+    
+    update transfer_database_config
+    set task_id = #{taskId,jdbcType=VARCHAR},
+      database_direction = #{databaseDirection,jdbcType=VARCHAR},
+      database_url = #{databaseUrl,jdbcType=VARCHAR},
+      database_username = #{databaseUsername,jdbcType=VARCHAR},
+      database_password = #{databasePassword,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIGINT},
+      create_uname = #{createUname,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_uname = #{updateUname,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getDatabaseConfig" resultMap="BaseResultMap">
+    select * from transfer_database_config limit 100
+  </select>
+
+  <select id="getBatchDatabaseConfig" parameterType="java.util.List" resultMap="BaseResultMap">
+    select * from transfer_database_config where task_id in
+    <foreach collection="taskIds" open="(" separator="," close=")" index="index" item="item">
+         #{item}
+     </foreach>
+  </select>
+</mapper>

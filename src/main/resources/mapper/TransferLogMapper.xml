@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.echo.one.dao.TransferLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.echo.one.po.TransferLog">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+        <result column="trace_id" jdbcType="VARCHAR" property="traceId" />
+        <result column="task_begin_date" jdbcType="TIMESTAMP" property="taskBeginDate" />
+        <result column="task_end_date" jdbcType="TIMESTAMP" property="taskEndDate" />
+        <result column="task_transfer_data_size" jdbcType="BIGINT" property="taskTransferDataSize" />
+        <result column="task_batch_num" jdbcType="INTEGER" property="taskBatchNum" />
+        <result column="task_exec_batch_num" jdbcType="INTEGER" property="taskExecBatchNum" />
+        <result column="task_file_num" jdbcType="INTEGER" property="taskFileNum" />
+        <result column="task_write_file_num" jdbcType="INTEGER" property="taskWriteFileNum" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="create_uname" jdbcType="VARCHAR" property="createUname" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_uname" jdbcType="VARCHAR" property="updateUname" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <select id="getTaskTransfer" parameterType="com.echo.one.po.TransferLog" resultMap="BaseResultMap">
+        select * from transfer_log limit 1000
+    </select>
+
+    <insert id="insertSelective" parameterType="com.echo.one.po.TransferLog">
+        insert into transfer_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="taskId != null">
+            task_id,
+          </if>
+          <if test="traceId != null">
+            trace_id,
+          </if>
+          <if test="taskBeginDate != null">
+            task_begin_date,
+          </if>
+          <if test="taskEndDate != null">
+            task_end_date,
+          </if>
+          <if test="taskTransferDataSize != null">
+            task_transfer_data_size,
+          </if>
+          <if test="taskFileNum != null">
+            task_file_num,
+          </if>
+          <if test="taskWriteFileNum != null">
+            task_write_file_num,
+          </if>
+          <if test="status != null">
+            `status`,
+          </if>
+          <if test="createUname != null">
+            create_uname,
+          </if>
+          <if test="createTime != null">
+            create_time,
+          </if>
+          <if test="updateUname != null">
+            update_uname,
+          </if>
+          <if test="updateTime != null">
+            update_time,
+          </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="taskId != null">
+            #{taskId,jdbcType=VARCHAR},
+          </if>
+          <if test="traceId != null">
+            #{traceId,jdbcType=BIGINT},
+          </if>
+          <if test="taskBeginDate != null">
+            #{taskBeginDate,jdbcType=TIMESTAMP},
+          </if>
+          <if test="taskEndDate != null">
+            #{taskEndDate,jdbcType=TIMESTAMP},
+          </if>
+          <if test="taskTransferDataSize != null">
+            #{taskTransferDataSize,jdbcType=BIGINT},
+          </if>
+          <if test="taskFileNum != null">
+            #{taskFileNum,jdbcType=INTEGER},
+          </if>
+          <if test="taskWriteFileNum != null">
+            #{taskWriteFileNum,jdbcType=INTEGER},
+          </if>
+          <if test="status != null">
+            #{status,jdbcType=BIGINT},
+          </if>
+          <if test="createUname != null">
+            #{createUname,jdbcType=VARCHAR},
+          </if>
+          <if test="createTime != null">
+            #{createTime,jdbcType=TIMESTAMP},
+          </if>
+          <if test="updateUname != null">
+            #{updateUname,jdbcType=VARCHAR},
+          </if>
+          <if test="updateTime != null">
+            #{updateTime,jdbcType=TIMESTAMP},
+          </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.echo.one.po.TransferLog">
+        update transfer_log
+        <set>
+          <if test="taskId != null and taskId != ''">
+            task_id = #{taskId,jdbcType=VARCHAR},
+          </if>
+          <if test="traceId != null">
+            trace_id = #{traceId,jdbcType=VARCHAR},
+          </if>
+          <if test="taskBeginDate != null">
+            task_begin_date = #{taskBeginDate,jdbcType=TIMESTAMP},
+          </if>
+          <if test="taskEndDate != null">
+            task_end_date = #{taskEndDate,jdbcType=TIMESTAMP},
+          </if>
+          <if test="taskTransferDataSize != null and taskId != ''">
+            task_transfer_data_size = #{taskTransferDataSize,jdbcType=BIGINT},
+          </if>
+          <if test="taskBatchNum != null">
+            task_batch_num = #{taskBatchNum,jdbcType=INTEGER},
+          </if>
+          <if test="taskExecBatchNum != null">
+            task_exec_batch_num = #{taskExecBatchNum,jdbcType=INTEGER},
+          </if>
+          <if test="taskFileNum != null">
+            task_file_num = #{taskFileNum,jdbcType=INTEGER},
+          </if>
+          <if test="taskWriteFileNum != null">
+            task_write_file_num = #{taskWriteFileNum,jdbcType=INTEGER},
+          </if>
+          <if test="status != null">
+            `status` = #{status,jdbcType=BIGINT},
+          </if>
+          <if test="createUname != null">
+            create_uname = #{createUname,jdbcType=VARCHAR},
+          </if>
+          <if test="createTime != null">
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+          </if>
+          <if test="updateUname != null">
+            update_uname = #{updateUname,jdbcType=VARCHAR},
+          </if>
+          <if test="updateTime != null">
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+          </if>
+        </set>
+        where
+            task_id = #{taskId,jdbcType=VARCHAR}
+            and trace_id = #{traceId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByTraceIdLog" parameterType="com.echo.one.po.TransferLog">
+        update transfer_log
+        set
+            task_exec_batch_num = #{taskExecBatchNum,jdbcType=INTEGER},
+            task_write_file_num = #{taskWriteFileNum,jdbcType=INTEGER},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            update_uname = #{updateUname,jdbcType=VARCHAR}
+        where
+            trace_id = #{traceId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getByTraceIdTaskTransfer" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from transfer_log where trace_id = #{traceId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getLog" resultMap="BaseResultMap">
+        select * from transfer_log where task_id = #{taskId} and create_time > #{date}
+    </select>
+
+</mapper>
