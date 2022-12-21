@@ -1,9 +1,6 @@
 # 项目正常运行中，欢迎提问、欢迎使用
 
 ### 赞助、打赏，私聊 t2421499075
-![赞助、打赏](https://img-blog.csdnimg.cn/ebfd680e3834408786760a6815c1e93a.png#pic_center)
-![私聊](https://img-blog.csdnimg.cn/37f78b9afbd94b19b51be98edb5cf0c0.png#pic_center)
-
 
 ### 历史数据迁移
 - 项目地址：```https://gitee.com/xl-echo/dataMigration```
