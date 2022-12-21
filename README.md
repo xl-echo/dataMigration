@@ -37,12 +37,3 @@ Bloom Filter | 布隆过滤器 | 校验数据是否一致 |
 
 开源项目持续开发中，文档将跟随项目持续更新
 
-### 项目陷入深坑一：
-ResultSet拼接5000条数据需要200多秒，拼接代码如下:
-![请添加图片描述](https://img-blog.csdnimg.cn/ff87289f95b541c49d9b5910ce2ec1f0.png)
-![请添加图片描述](https://img-blog.csdnimg.cn/b84f34473ec04f1bb65e0e3e7d695bc9.png)
-
-### 项目陷入深坑二：
-数据库连接不够用
-![请添加图片描述](https://img-blog.csdnimg.cn/04de6a649ca64a578e58191306d7c08d.png)
-
