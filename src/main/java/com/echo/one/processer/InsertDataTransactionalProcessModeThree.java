@@ -4,7 +4,6 @@ import com.echo.one.common.base.TransferContext;
 import com.echo.one.common.base.TransferDataContext;
 import com.echo.one.common.enums.DatabaseDirection;
 import com.echo.one.common.exception.DataMigrationException;
-import com.echo.one.job.DataTaskThread;
 import com.echo.one.po.TransferDatabaseConfig;
 import com.echo.one.utils.DateUtils;
 import com.echo.one.utils.SpringContextUtils;
@@ -28,15 +27,15 @@ import java.util.List;
  * @date 2022/11/23 13:06
  */
 @Scope(value = "prototype")
-@Component(value = "process.insertData.1")
-public class InsertDataProcessModeOne extends ProcessMode {
+@Component(value = "process.insertData.3")
+public class InsertDataTransactionalProcessModeThree extends ProcessMode {
 
-    private static final Logger logger = LoggerFactory.getLogger(DataTaskThread.class);
+    private static final Logger logger = LoggerFactory.getLogger(InsertDataTransactionalProcessModeThree.class);
 
     @Override
     protected void handler(TransferContext transferContext) {
         String traceId = transferContext.getTraceId();
-        logger.info("traceId: {}, 开始执行mode为1的插入process", transferContext.getTraceId());
+        logger.info("traceId: {}, 开始执行mode为3的插入process", transferContext.getTraceId());
 
         // 获取数据库配置信息
         TransferDatabaseConfig databaseConfig = getDatabaseConfig(transferContext);
@@ -66,12 +65,7 @@ public class InsertDataProcessModeOne extends ProcessMode {
             for (String s : list) {
                 stmt.execute(s);
             }
-            newConn.commit();
         } catch (Exception e) {
-            try {
-                assert newConn != null;
-                newConn.rollback();
-            } catch (Exception ignored) {}
             logger.info("traceId: {}, insert类执行: 插入数据报错, 错误信息: {}", traceId, e.getMessage());
             throw new DataMigrationException("插入数据报错,错误信息: " + e.getMessage());
         } finally {

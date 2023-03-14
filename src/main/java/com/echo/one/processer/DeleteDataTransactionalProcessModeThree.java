@@ -29,16 +29,16 @@ import java.util.concurrent.ExecutorService;
  * @date 2022/11/23 13:06
  */
 @Scope(value = "prototype")
-@Component(value = "process.deleteData.1")
-public class DeleteDataProcessModeOne extends ProcessMode {
+@Component(value = "process.deleteData.3")
+public class DeleteDataTransactionalProcessModeThree extends ProcessMode {
 
-    private static final Logger logger = LoggerFactory.getLogger(DeleteDataProcessModeOne.class);
+    private static final Logger logger = LoggerFactory.getLogger(DeleteDataTransactionalProcessModeThree.class);
     @Autowired
     private TransferLogService transferLogService;
 
     @Override
     protected void handler(TransferContext transferContext) {
-        logger.info("traceId: {}, 开始执行mode为1的删除process", transferContext.getTraceId());
+        logger.info("traceId: {}, 开始执行mode为3的删除process", transferContext.getTraceId());
 
         // JDBC获取数据库链接
         TransferDatabaseConfig databaseConfig = getDatabaseConfig(transferContext);
@@ -48,7 +48,7 @@ public class DeleteDataProcessModeOne extends ProcessMode {
         String deleteSql = "delete from " + transferSelectConfig.getTableName() + " where " + transferSelectConfig.getTableWhere() + " limit " + transferSelectConfig.getLimitSize();
 
         // 执行删除
-        execDelete(transferContext.getTraceId(), databaseConfig, deleteSql);
+        execDelete(databaseConfig, deleteSql);
 
         // 继续轮训执行删除
         loopExec(databaseConfig, transferContext);
@@ -102,37 +102,13 @@ public class DeleteDataProcessModeOne extends ProcessMode {
         return count;
     }
 
-    private void execDelete(String traceId, TransferDatabaseConfig databaseConfig, String deleteSql) {
-        Connection newConn = null;
-        Statement stmt = null;
-        try {
-            newConn = JdbcUtils.getConn(databaseConfig.getDatabaseUrl(), databaseConfig.getDatabaseUsername(), databaseConfig.getDatabasePassword());
-            newConn.setAutoCommit(false);
-            stmt = newConn.createStatement();
+    private void execDelete(TransferDatabaseConfig databaseConfig, String deleteSql) {
+        try (Connection newConn = JdbcUtils.getConn(databaseConfig.getDatabaseUrl(), databaseConfig.getDatabaseUsername(), databaseConfig.getDatabasePassword());
+             Statement stmt = newConn.createStatement();
+        ) {
             stmt.execute(deleteSql);
-            newConn.commit();
         } catch (Exception e) {
-            try {
-                assert newConn != null;
-                newConn.rollback();
-            } catch (Exception ignored) {}
-            logger.info("traceId: {}, Statement执行删除SQL: {}, 执行异常, 异常信息: {}", traceId, deleteSql, e.getMessage());
-            throw new DataMigrationException("删除数据报错,错误信息: " + e.getMessage());
-        } finally {
-            if (newConn != null) {
-                try {
-                    newConn.close();
-                } catch (Exception e) {
-                    logger.error("traceId: {}, 关闭conn失败!", traceId);
-                }
-            }
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (Exception e) {
-                    logger.error("traceId: {}, 关闭stmt失败!", traceId);
-                }
-            }
+
         }
     }
 
